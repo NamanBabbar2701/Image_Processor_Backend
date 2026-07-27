@@ -1,4 +1,9 @@
-# Smart Portrait Cropper - Backend
+# Image Processor - Backend
+
+> Backend service for the Image Processor application.
+
+Frontend Repository:
+https://github.com/NamanBabbar2701/Image_Processor_Frontend
 
 A FastAPI-based backend for automated portrait photo processing. The system accepts an Excel workbook containing student information and image URLs, downloads each image, detects facial landmarks using MediaPipe Face Mesh, aligns portraits, applies intelligent composition rules, and generates standardized ID-card photographs in batch.
 
@@ -276,17 +281,6 @@ Configurable parameters include:
 
 ---
 
-## Frontend
-
-The React frontend for this project is maintained separately.
-
-Repository:
-
-```
-https://github.com/NamanBabbar2701/Image_Processor_Frontend.git
-```
-
----
 
 ## License
 
