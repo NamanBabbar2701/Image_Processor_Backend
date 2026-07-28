@@ -14,7 +14,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # We'll tighten this later
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://image-processor.vercel.app/",
+        ],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
