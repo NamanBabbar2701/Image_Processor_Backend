@@ -182,7 +182,8 @@ class ExcelProcessor:
         log_dir,
         column_mapping,
         timeout=20,
-        progress_callback=None
+        progress_callback=None,
+        job_id=None
     ):
 
         Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -256,8 +257,10 @@ class ExcelProcessor:
                 if progress_callback:
 
                     progress_callback(
+                            job_id = job_id,
                             current=index + 1,
-                            total=total
+                            total=total,
+                            student_name=student_name
                     )
                 
                 continue
@@ -314,8 +317,10 @@ class ExcelProcessor:
             if progress_callback:
                 
                 progress_callback(
+                    job_id = job_id,
                     current = index +1,
-                    total = total
+                    total = total,
+                    student_name = student_name
                 )
 
         # --------------------
@@ -326,6 +331,15 @@ class ExcelProcessor:
             report,
             log_dir
         )
+        
+        if progress_callback:
+            
+            progress_callback(
+                job_id = job_id,
+                current = total,
+                total = total,
+                student_name = "Completed"
+            )
          
         return {
             "processed": processed,
@@ -340,3 +354,5 @@ class ExcelProcessor:
             
             "debug_directory" : debug_dir
         }
+        
+        

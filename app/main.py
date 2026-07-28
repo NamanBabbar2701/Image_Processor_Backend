@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.upload_routes import router as upload_router
 from app.api.process_routes import router as process_router
 from app.api.download_routes import router as download_router
+from app.api.progress_routes import router as progress_router
+from app.api.result_routes import router as result_router
 
 app = FastAPI(
     title="Smart Portrait Cropper API",
@@ -21,6 +23,8 @@ app.add_middleware(
 app.include_router(upload_router)
 app.include_router(process_router)
 app.include_router(download_router)
+app.include_router(progress_router)
+app.include_router(result_router)
 
 
 @app.get("/")

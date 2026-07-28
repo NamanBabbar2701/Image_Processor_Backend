@@ -14,6 +14,10 @@ class JobService:
             exist_ok=True
         )
         
+        self.progress={}
+        
+        self.results={}
+        
     def _build_paths(
         self,
         job_dir: Path
@@ -43,6 +47,16 @@ class JobService:
         output_dir.mkdir(exist_ok=True)
         debug_dir.mkdir(exist_ok=True)
         log_dir.mkdir(exist_ok=True)
+        
+        self.progress[job_id] = {
+            "status": "created",
+            "current": 0,
+            "total": 0,
+            "student": "",
+            "percentage": 0,
+            "completed": False
+            
+        }
 
         return {
 
@@ -85,4 +99,84 @@ class JobService:
 
         shutil.rmtree(job_dir)
         
+        if job_id in self.progress:
+            del self.progress[job_id]
+        
         return True
+    
+    def update_progress(
+        self,
+        job_id: str,
+        current: int,
+        total: int,
+        student_name: str
+    ):
+        percentage = (
+            int((current / total) * 100)
+            if total > 0
+            else 0
+)
+
+        if job_id not in self.progress:
+            return
+
+        self.progress[job_id]["status"] = "processing"
+
+        self.progress[job_id]["current"] = current
+
+        self.progress[job_id]["total"] = total
+
+        self.progress[job_id]["student"] = student_name
+        
+        self.progress[job_id]["percentage"] = percentage
+        
+        self.progress[job_id]["completed"] = False
+        
+    def complete_job(
+        self,
+        job_id: str
+    ):
+        
+        print("=" * 50)
+        print("COMPLETE JOB CALLED")
+        print("Job ID:", job_id)
+        
+
+        if job_id not in self.progress:
+            print("NOT FOUND")
+            print(self.progress)
+            return
+
+        self.progress[job_id]["status"] = "completed"
+        self.progress[job_id]["completed"] = True
+        
+        print("UPDATED:")
+        print(self.progress[job_id])
+        print("=" * 50)
+        
+    def get_progress(
+        self,
+        job_id: str
+    ):
+
+        progress = self.progress.get(job_id)
+        print("GET PROGRESS:")
+        print(progress)
+        
+        return progress
+    
+    def save_result(
+        self,
+        job_id: str,
+        result: dict
+    ):
+
+        self.results[job_id] = result
+        
+    def get_result(
+        self,
+        job_id: str
+    ):
+        return self.results.get(job_id)
+        
+job_service = JobService();

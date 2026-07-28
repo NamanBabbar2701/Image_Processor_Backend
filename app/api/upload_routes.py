@@ -3,11 +3,12 @@ from fastapi import APIRouter, UploadFile, File
 from app.models.upload_response import UploadResponse
 from app.services.upload_service import UploadService
 from app.services.exel_service import ExcelService
-from app.services.job_service import JobService
+from app.services.job_service import job_service
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Upload"]
+)
 
-job_service = JobService()
 upload_service = UploadService()
 excel_service = ExcelService()
 
